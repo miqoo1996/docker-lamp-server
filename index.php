@@ -1,5 +1,7 @@
 <?php
 
+require 'vendor/autoload.php';
+
 $servername = "mysql";
 $database = "test";
 $username = "root";

@@ -10,9 +10,10 @@ services:
     ports:
       - "80:80"
     volumes:
-      - .:/var/www
+      - .:/var/www/project
     depends_on:
       - mysql
+      - elasticsearch
     networks:
       - web_net
 
@@ -31,6 +32,21 @@ services:
     volumes:
       # you should keep this for keeping database after restarting docker
       - ./Docker/mysql/databases:/var/lib/mysql
+    networks:
+      - web_net
+
+  elasticsearch:
+    container_name: elastic
+    image: elasticsearch:7.17.10
+    environment:
+      - discovery.type=single-node
+      - ES_JAVA_OPTS=-Xms1g -Xmx1g
+      - xpack.security.enabled=false
+    #volumes:
+    #  - Docker/elasticsearch/data:/usr/share/elasticsearch/data
+    ports:
+      #- 9300:9300
+      - 9200:9200
     networks:
       - web_net
 
